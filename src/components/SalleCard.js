@@ -2,11 +2,22 @@ import Grid from "@mui/material/Grid";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import CircleIcon from "@mui/icons-material/Circle";
+import {useNavigate} from "react-router-dom";
+import { useHistory } from 'react-router-dom';
 
 export default function SalleCard(props) {
   const { salle } = props;
 
   console.log(salle);
+
+  let salleId = salle.id;
+
+    let navigate = useNavigate();
+    const routeChange = () =>{
+        let path = "/salles/"+ salleId;
+        navigate(path);
+    }
+
 
   return (
     <Grid
@@ -16,6 +27,7 @@ export default function SalleCard(props) {
       style={{ padding: 20 }}
     >
       <Grid
+          onClick={routeChange}
         item
         xs={12} sm={10} md={10} lg={8}
         style={{

@@ -1,23 +1,26 @@
 import React from 'react';
 import Accueil from "./components/Accueil";
 import NavBar from "./components/NavBar";
-import DetailReservation from "./components/DetailReservation";
 import {BrowserRouter, Route, Routes} from "react-router-dom";
-
+import Menu from "./components/Menu";
+import DetailReservation from "./components/DetailReservation";
 
 function App() {
     let estConnecte = true;
-    let salleID = 1;
     return(
       <div>
           <NavBar connecte={estConnecte} />
           <BrowserRouter>
               <Routes>
-                  <Route path="/accueil" element={<Accueil />}>
+                  <Route path="/" element={<Accueil />}>
                   </Route>
-                  {/*Ajouter page Antoine TODO*/}
-                  <Route path="/salles" element={<Accueil />}>
+
+                  <Route path="/salles" element={<Menu />}>
                   </Route>
+
+                  <Route path="/salles/:id" element={<DetailReservation/>}>
+                  </Route>
+
               </Routes>
           </BrowserRouter>
 

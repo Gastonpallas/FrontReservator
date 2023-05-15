@@ -1,6 +1,8 @@
 import { Grid } from "@mui/material";
 import SalleCard from "./SalleCard";
 import { map } from "lodash";
+import axios from "axios";
+import {useState} from "react";
 
 const SALLE = [
   { nom: "Salle A", nombrePlaces: 50, videoProjecteur: true },
@@ -16,9 +18,26 @@ const SALLE = [
 ];
 
 function Menu() {
+
+
+  const [salles, setSalles] = useState(null);
+
+  const fetchData = async () => {
+    try {
+      const response = await axios.get(`http://localhost:8080/salle`);
+      const data = response.data;
+      setSalles(data)
+    } catch (error) {
+      console.error('Erreur lors de la récupération des données :', error);
+    }
+  };
+
+  fetchData();
+
+
   return (
     <Grid container direction="row" alignItems="center" justifyContent="center">
-      {map(SALLE, (salle) => {
+      {map(salles, (salle) => {
         console.log(salle);
         return (
           <Grid item xs={12} sm={12} md={6} lg={6}>

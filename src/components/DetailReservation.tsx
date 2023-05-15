@@ -1,23 +1,28 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import {useParams} from "react-router-dom";
 
-interface props {
-    salleId: number;
-}
+
 interface Salle {
     id: number;
     nom: string;
     nombrePlaces: number;
     videoProjecteur: boolean;
+    pictureUrl: string;
+    isDisponible: boolean;
 }
-function DetailReservation({ salleId } : props) {
+function DetailReservation() {
+
+    const { id } = useParams();
+
     const [salle, setSalle] = useState<Salle | null>(null);
 
         const fetchData = async () => {
             try {
-                const response = await axios.get(`http://localhost:8080/salle/${salleId}`);
+                const response = await axios.get(`http://localhost:8080/salle/${id}`);
                 const data = response.data;
                 setSalle(data)
+                console.log(salle)
             } catch (error) {
                 console.error('Erreur lors de la récupération des données :', error);
             }
@@ -34,6 +39,7 @@ function DetailReservation({ salleId } : props) {
                         <p className="mb-2">Nom : {salle.nom}</p>
                         <p className="mb-2">Nombre de places : {salle.nombrePlaces}</p>
                         <p className="mb-2">Vidéo-projecteur : {salle.videoProjecteur ? 'Oui' : 'Non'}</p>
+                        <p className="mb-2">Disponible : {salle.isDisponible ? 'Oui' : 'Non'}</p>
                     </>
                 ) : (
                     <p>Chargement des données...</p>
